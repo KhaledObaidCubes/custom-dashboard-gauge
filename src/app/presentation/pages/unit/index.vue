@@ -6,18 +6,7 @@
     <template #ready>
       <v-card>
         <v-row>
-          <v-col v-if="isStrategic" :xs="12">
-            <div class="flex-grow-1">
-              <v-animated
-                v-if="headerComponent.component"
-                :key="headerComponent.name"
-                :is="headerComponent.component"
-                :initial="{ opacity: 0, y: 40 }"
-                :animate="{ y: 0, opacity: 1 }"
-                :transition="{ opacity: { easing: 'linear', duration: 1.3, transform: 'none' }, easing: spring(), delay: 0.1, duration: 1 }"
-              /></div
-          ></v-col>
-          <v-col v-else :xs="8">
+          <v-col :xs="isStrategic ? 12 : 8">
             <div class="flex-grow-1">
               <v-animated
                 v-if="headerComponent.component"
@@ -47,14 +36,22 @@
           </v-col>
         </v-row>
 
-        <v-async v-if="isStrategic && strategicCarousel" :promise="getStrategicPlanList">
+        <v-async v-if="appService.application.config.strategicCarousel?.enable && isStrategic" :promise="getStrategicPlanList">
           <template #busy>
             <v-spinner size="sm" />
           </template>
           <template v-slot:ready="{ result: { success } }">
             <v-carousel v-if="success" v-model="model">
               <v-carousel-item v-for="(item, indx) in [...success]" :id="item.id" :key="item.id" class="flex-shrink-0 text-danger w-25 m-0" :class="indx ? 'pl-4' : 'pl-0'">
-                <strategy-gauge v-if="true" :value="item.history.last.formattedValue[lang]" :strategy="item.name" :primary-color="'#dd5c65'" :secondary-color="'#f7e1e3'" :height="200" class="mt-5" />
+                <strategy-gauge
+                  v-if="appService.application.config.strategicCarousel?.isGauge"
+                  :value="item.history.last.formattedValue[lang]"
+                  :strategy="item.name"
+                  :primary-color="'#dd5c65'"
+                  :secondary-color="'#f7e1e3'"
+                  :height="200"
+                  class="mt-5"
+                />
                 <div v-else class="metric px-0">
                   <div class="d-flex align-items-baseline justify-content-between">
                     <div>
@@ -154,8 +151,7 @@ const appContext = IoC.DI().resolve<IAppContext>(`appContext`),
   crumbs = ref([]) as Ref<any[]>,
   routeInfo = ref(),
   headerComponent = ref({}) as Ref<{ component: any; name: string }>,
-  orgUnitPickerRef = ref(),
-  strategicCarousel = appService.application.config.strategicCarousel
+  orgUnitPickerRef = ref()
 
 const urlInfo = computed(() => ({
   params: 'id',

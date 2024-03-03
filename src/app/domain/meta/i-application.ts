@@ -3,7 +3,7 @@ import { type TConfig as TDashboardConfig } from 'cubes-dashboard'
 
 interface TWindowsConfig {
   commonDashboardURL: string
-  strategicCarousel: boolean
+  strategicCarousel: { enable: boolean; isGauge: boolean }
 }
 type TConfig = TDashboardConfig & TWindowsConfig
 
