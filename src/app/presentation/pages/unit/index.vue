@@ -6,7 +6,18 @@
     <template #ready>
       <v-card>
         <v-row>
-          <v-col :xs="12">
+          <v-col v-if="isStrategic" :xs="12">
+            <div class="flex-grow-1">
+              <v-animated
+                v-if="headerComponent.component"
+                :key="headerComponent.name"
+                :is="headerComponent.component"
+                :initial="{ opacity: 0, y: 40 }"
+                :animate="{ y: 0, opacity: 1 }"
+                :transition="{ opacity: { easing: 'linear', duration: 1.3, transform: 'none' }, easing: spring(), delay: 0.1, duration: 1 }"
+              /></div
+          ></v-col>
+          <v-col v-else :xs="8">
             <div class="flex-grow-1">
               <v-animated
                 v-if="headerComponent.component"
@@ -22,14 +33,14 @@
               <org-unit-picker ref="orgUnitPickerRef" v-model="orgUnit" />
               <v-presence>
                 <div class="d-flex justify-content-end align-items-center mt-3">
-                  <!-- <a
+                  <a
                     v-if="orgUnit && orgUnit[0] && !isStrategic"
                     v-fake-link
                     @click="() => appManager.navigateExternal(`${appService.application.config.commonDashboardURL}${orgUnit[0].id}${$route.query?.period ? '?period=' + $route.query.period : ''}`)"
                   >
                     <span class="text-left m-0">{{ tUnit.openDashboard }}</span>
                     <v-icon name="arrow-right" class="ml-2" size="lg" />
-                  </a> -->
+                  </a>
                 </div>
               </v-presence>
             </div>
@@ -128,6 +139,7 @@ import { IGetUnitObjectives } from '@/app/service/meta/api-args'
 const paginatorModel = ref(0)
 
 const model = ref({ itemIndex: 0, pageIndex: 0, itemIndexInPage: 0 })
+const appManager = IoC.DI().resolve<IAppManager>(serviceMap.AppManager.key)
 const appContext = IoC.DI().resolve<IAppContext>(`appContext`),
   appService = appContext.services[serviceMap.AppService.key] as IDashboardAppService,
   historicalPIService = appContext.services[serviceMap.HistoricalPIService.key] as IHistoricalPIService,
