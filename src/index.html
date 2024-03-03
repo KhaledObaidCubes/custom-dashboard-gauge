@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Cubes ADAFSA Custom Dashboard</title>
+    <!--Polyfills-->
+    <script>
+      __runtime_public_path__ = {
+        cubes: '/packages/cubes/',
+        'cubes-adafsa-custom': '/',
+        'cubes-style': '/packages/cubes-style/',
+        'cubes-ui': '/packages/cubes-ui/',
+        'cubes-app': '/packages/cubes-app/',
+        'cubes-dashboard': '/packages/cubes-dashboard/',
+        'cubes-auth': '/packages/cubes-auth/',
+        Vue: '/packages/vue/',
+        VueRouter: '/packages/vue-router/'
+      }
+      if (typeof Promise === 'undefined') document.write('<script src="promise.min.js"><\/script>')
+      if (typeof fetch === 'undefined') document.write('<script src="fetch.umd.js"><\/script>')
+    </script>
+
+    <script type="systemjs-importmap" src="/packages.json"></script>
+    <script type="text/javascript" src="/loader.min.js"></script>
+  </head>
+
+  <body>
+    <div data-cubes-adafsa-custom-app></div>
+    <script>
+      var context = window
+      System.ready(['Vue', 'VueRouter'], ['cubes-style', 'cubes', 'cubes-ui', 'cubes-app', 'cubes-dashboard', 'cubes-adafsa-custom'], [], function () {}, context)
+    </script>
+    <script type="text/javascript">
+      window.configure = function () {
+        return {
+          secure: true,
+          commonDashboardURL: 'https://cubes.solutions/CubesCommon.UI/summary/',
+          strategicCarousel: true,
+          //noDateFilter: true,
+          dashboard: {
+            project: {
+              metadata: { budget: 62, spending: 63, status: 64 } //initiative spending and budget schema id's
+            }
+          },
+          currencySymbol: { ar: 'د.إ', en: 'AED' },
+          // branding: {
+          //   //style: 'dmt',
+          //   title: { en: 'The Department of Municipalities and Transport', ar: 'دائرة البلديات والنقل' }
+          //   // logo: 'public/injazi-dark.svg', // {0} style
+          //   // bg: 'public/bg-{0}.jpg', // {0} lang, {1} theme, {2} style
+          //   // auth: {
+          //   //   appLogo: 'public/{2}-logo-{1}.svg', // {0} lang, {1} theme, {2} style
+          //   //   clientLogo: 'public/injazi-light.svg'
+          //   // }
+          // },
+          themes: [
+            {
+              name: 'light',
+              ui: {
+                icon: 'sun'
+              }
+            }
+          ],
+          layout: { sideMenuMode: 'none' },
+          cultures: [
+            { id: 9, lang: 'en', locale: 'en-US', lcid: 1033, dir: 'ltr' },
+            { id: 1, lang: 'ar', locale: 'ar-JO', lcid: 11265, dir: 'rtl' }
+          ],
+          currencySymbol: { ar: 'د.إ', en: 'AED' },
+          social: {
+            facebook: 'https://www.facebook.com/sharer/sharer.php',
+            twitter: 'https://www.twitter.com/share',
+            linkedin: 'https://linkedin.com/shareArticle'
+          },
+          network: {
+            shared: {
+              baseURL: 'https://cubes.solutions/CubesApps',
+              api: '/api/v2'
+            },
+            objectsBrowser: {
+              baseURL: 'https://cubes.solutions/CubesApps',
+              api: '/api'
+            },
+            foldersBrowser: {
+              baseURL: 'https://cubes.solutions/CubesApps',
+              api: '/api'
+            },
+            security: {
+              baseURL: 'https://cubes.solutions/CubesApps',
+              api: '/api/v2'
+            },
+            auth: {
+              mode: 'cubes',
+              pkceURL: 'https://cubes.solutions/CubesStorylineWebAppSTG',
+              baseURL: 'https://cubes.solutions/CubesApps',
+              authRelayUri: 'https://localhost.cubes.solutions:8080/packages/cubes-ui/auth-relay.html',
+              api: '/api',
+              clientId: 'cubes',
+              tokenEndpoint: '/Auth/Token',
+              logoutEndpoint: '/LogoutPage.aspx',
+              userInfoEndpoint: '/Auth/User',
+              authorizeEndpoint: '/Auth/Authorize',
+              externalLoginsEndpoint: '/Account/ExternalLogins',
+              profilePictureEndpoint: '/user/profile/picture'
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
